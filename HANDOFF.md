@@ -54,3 +54,7 @@ Nutzer hat den separaten Webhook-Schlüssel ausdrücklich genehmigt. `Enneo Demo
 E2E-Test 18:22 Budapest, Anfrage-ID `enneo-funnel-test-20261006-001`, E-Mail `funnel-integration-test-20261006@example.com`, Marketing-Consent false: Netlify→authentifizierter Make-Webhook funktioniert, Attio-Modul 2 antwortet **403: Records Read-Write fehlt**. Kein CRM-Kontakt/keine Notiz angelegt, kein Meta-Lead ausgelöst. Endpoint liefert korrekt 502 lead_not_confirmed. Nutzer um Records- und Notes-Schreibrechte für die bestehende Attio-Verbindung gebeten. Keine Freigaben erneut erfragen: Webhook und CAPI sind bereits autorisiert.
 
 MAKE_FUNNEL_ENABLED danach wieder auf false gesetzt; aktueller Dokumentations-Push löst das Deployment zur Übernahme aus. Nach korrigiertem Attio-Token/-Scope: Flag true/deploy, Run once, gleiche Anfrage erneut testen (noch kein Lock/Record geschrieben), Person/Notiz lesen, doppelte/parallele/no-consent-Anfrage prüfen; danach aktivieren und Marketing-Lead mit Consent prüfen. Noch keine Ende-zu-Ende-Erfolgsmeldung.
+
+## GA4-Erweiterung in Arbeit
+
+GA4-Stream 16054667514 / G-DGN4ZBRG49 in bestehender Enneo-Property 551723662 angelegt. Enhanced Measurement aus. Eigene Statistik-Einwilligung und vollständige Funnel-Ereignisse implementiert, 30 Tests + Build bestanden; Cookie-Auswahl und B-Einstieg lokal im Browser geprüft. Registrierung von Auswertungsdimensionen und Einrichtung des gespeicherten Trichterberichts/Live-Test läuft noch. Details docs/funnel-analytics.md. Keine Änderung an deaktivierter CRM-Pipeline oder Attio-Zugriffsgrenzen.

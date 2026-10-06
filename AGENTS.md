@@ -48,3 +48,11 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - `booking.mjs` akzeptiert Buchungsbestätigungen ausschließlich von der echten Kalender-iframe-Window-Referenz und origin https://calendly.com mit plausiblen zusammengehörigen Event-/Invitee-URIs. `Schedule` nur nach dieser Bestätigung und Marketing-Einwilligung. Keine echte Testbuchung ohne ausdrücklichen Auftrag.
 - `netlify/functions/lead.mjs` ist die geschützte serverseitige Make-Anbindung. Aktiv erst bei MAKE_FUNNEL_ENABLED=true plus Webhook-URL/Key. Bis dahin keine CRM-Speicherung/Lead-Conversion behaupten; Kalender bleibt nutzbar.
 - Make-Empfang allein ist kein CRM-Erfolg: explizite saved-Antwort mit passender submission_id und Attio-Record-ID nötig. Stable IDs für Wiederholung/Dedupe. Make-Idempotenz, Notes, CAPI und Server-Buchungsnachweis sind noch fertigzustellen; `integrations/make/README.md` beachten.
+
+## GA4 Funnel Analytics (06.10.2026)
+
+- Nutzer beauftragte Abbruchanalyse je Frage. `src/analytics.mjs` ergänzt deduplizierte Schritte/Abschlüsse, Rücksprünge, Formular-/Backend-/Kalenderfehler, Kalenderladen/Terminauswahl/Buchung und private Abzweigung. Keine Formularwerte/Antworten in Analytics.
+- Eigener GA4-Stream Enneo Demo Funnel: 16054667514, G-DGN4ZBRG49, Property 551723662. Enhanced Measurement dort deaktiviert. Main-Website-Stream unverändert. Direkter gtag nur nach separater Statistik-Einwilligung; kein zusätzlicher GTM-Container.
+- Analytics/Marketing unabhängig im Cookie-Dialog. Alte Marketing-Einwilligung gilt nicht als Statistik-Einwilligung. Neue Hostnamen ausdrücklich freigeben; derzeit nur enneo-funnel.netlify.app.
+- Varianten B: Branchenfrage bereits im Hero sichtbar. Späte Einwilligung markiert partial, keine rückwirkenden Events. Nutzerbasierte Trichterquoten, keine Rohklickquoten; 30-Minuten-Inaktivitätsfenster für lokale Deduplizierung.
+- Details, Messvertrag und Report-Spezifikation in docs/funnel-analytics.md. GA4-Bericht/Live-Abnahme separat verifizieren, nicht allein aus erfolgreichen Unit-Tests behaupten.
