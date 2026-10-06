@@ -6,7 +6,9 @@ Produktionsdomain: https://funnel.enneo.ai (A: /, B: /2, C: /3). Deployment bdee
 
 # Enneo Demo Funnel — Übergabe, 2026-10-06
 
-## Aktueller Stand
+## Historischer UI-Stand vor Tracking-Erweiterungen
+
+Die folgenden ursprünglichen UI-Abschnitte dokumentieren den Zwischenstand vor Meta, GA4 und echtem Calendly. Maßgeblich sind der Domainabschluss oben und die späteren Integrationsabschnitte unten. Aktuell offen: Attio-Records/Notes-Schreibrechte, danach E2E-/Dedupe-Prüfung und bewusste CRM-Aktivierung. Webhook- und CAPI-Zugänge sind bereits freigegeben und eingerichtet.
 
 - Repository: https://github.com/enneo-AI/funnel, Veröffentlichungsbranch `main`.
 - Live geprüfter UI-Stand: `20ef230` (Verkaufsstrecke V3). Nachfolgende Abschluss-Commits betreffen nur Dokumentation.
