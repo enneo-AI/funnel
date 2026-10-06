@@ -1,3 +1,4 @@
+import {isProductionHost} from './production-hosts.mjs';
 // Enneo Demo Funnel stream 16054667514, verified in GA4 property 551723662.
 export const GA_ID = 'G-DGN4ZBRG49';
 export const ANALYTICS_CONSENT_KEY='enneo-analytics-consent-v1';
@@ -16,7 +17,7 @@ export function createAnalytics(win,doc,variant,{id=GA_ID,now=()=>Date.now()}={}
  let seen=new Set(),lastActivity=now(),scriptState='not_loaded';const debugEvents=[];
  try{const s=JSON.parse(win.localStorage.getItem(ANALYTICS_CONSENT_KEY));if(s&&typeof s.allowed==='boolean'&&now()-s.at>=0&&now()-s.at<AGE)consent=s.allowed;}catch{}
  const debug=new URLSearchParams(win.location.search).get('analytics_debug')==='1';
- const hostOK=()=>win.location.hostname==='enneo-funnel.netlify.app';
+ const hostOK=()=>isProductionHost(win.location.hostname);
  const permitted=()=>consent===true&&hostOK()&&/^G-[A-Z0-9]+$/.test(id);
  function persist(){try{win.sessionStorage.setItem(JOURNEY_KEY,JSON.stringify({variant,seen:[...seen],at:now(),entry}));}catch{}}
  function restore(){try{const s=JSON.parse(win.sessionStorage.getItem(JOURNEY_KEY));if(s?.variant===variant&&now()-s.at>=0&&now()-s.at<IDLE&&Array.isArray(s.seen)){seen=new Set(s.seen.filter(v=>typeof v==='string'));entry=s.entry==='partial'?'partial':'full';}}catch{}}

@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {routeLead,validateContact,questions,labelFor} from '../../src/flow.mjs';
-const ORIGIN='https://enneo-funnel.netlify.app';
+import {isProductionOrigin} from '../../src/production-hosts.mjs';
 const json=(status,body)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 export function parseLead(body){
  if(!body||typeof body!=='object'||body.website)return null;
@@ -12,7 +12,8 @@ export function parseLead(body){
 }
 export function createLeadHandler({env=process.env,fetcher=fetch}={}){return async (request,context={})=>{
  if(request.method!=='POST')return json(405,{error:'method_not_allowed'});
- if(request.headers.get('origin')!==ORIGIN)return json(403,{error:'origin_not_allowed'});
+ const origin=request.headers.get('origin');
+ if(!isProductionOrigin(origin))return json(403,{error:'origin_not_allowed'});
  if(!request.headers.get('content-type')?.startsWith('application/json'))return json(415,{error:'json_required'});
  const raw=await request.text();if(raw.length>12000)return json(413,{error:'too_large'});
  let lead;try{lead=parseLead(JSON.parse(raw));}catch{}if(!lead)return json(400,{error:'invalid_submission'});
@@ -23,7 +24,7 @@ export function createLeadHandler({env=process.env,fetcher=fetch}={}){return asy
  const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
  const noteContent=[`Name: ${lead.contact.name}`,`E-Mail: ${lead.contact.email}`,`Unternehmen (Selbstauskunft): ${lead.contact.company}`,...questions.map(q=>`${q.title} ${labelFor(q.key,lead.answers[q.key])}`),`Funnel-Variante: ${lead.variant}`,`Prüfpfad: ${lead.route} (keine bestätigte Sales-Qualifikation)`,`Anfrage-ID: ${lead.submission_id}`].join('\n');
  const consent=JSON.parse(raw).marketingConsent===true;
- const meta=consent?{event_name:'Lead',event_id:`lead-${lead.submission_id}`,event_time:Math.floor(Date.now()/1000),action_source:'website',event_source_url:ORIGIN+(lead.variant==='b'?'/2':lead.variant==='c'?'/3':'/'),user_data:{client_ip_address:context.ip,client_user_agent:request.headers.get('user-agent')||undefined},custom_data:{funnel_variant:lead.variant}}:null;
+ const meta=consent?{event_name:'Lead',event_id:`lead-${lead.submission_id}`,event_time:Math.floor(Date.now()/1000),action_source:'website',event_source_url:origin+(lead.variant==='b'?'/2':lead.variant==='c'?'/3':'/'),user_data:{client_ip_address:context.ip,client_user_agent:request.headers.get('user-agent')||undefined},custom_data:{funnel_variant:lead.variant}}:null;
  try{
   const result=await fetcher(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-make-apikey':secret},body:JSON.stringify({...lead,fingerprint,note_title:`Enneo Demo-Anfrage ${lead.submission_id}`,note_content_json:JSON.stringify(noteContent),marketing_consent:consent,meta_json:consent?JSON.stringify({data:[meta]}):null}),signal:AbortSignal.timeout(20000)});
   if(!result.ok)return json(502,{error:'lead_not_confirmed'});

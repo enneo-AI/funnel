@@ -1,3 +1,4 @@
+import {isProductionHost} from './production-hosts.mjs';
 // Public Meta pixel ID, verified in Enneo GmbH's Events Manager.
 export const PIXEL_ID = '1573099514138831';
 export const CONSENT_KEY = 'enneo-marketing-consent-v1';
@@ -13,7 +14,7 @@ export function createTracking(win, doc, variant) {
  try { const saved=JSON.parse(win.localStorage.getItem(CONSENT_KEY));
   if(saved && typeof saved.allowed==='boolean' && Number.isFinite(saved.at) && Date.now()-saved.at>=0 && Date.now()-saved.at<MAX_AGE) consent=saved.allowed;
  } catch { /* Storage may be unavailable. */ }
- const permitted = () => consent===true && (win.location.hostname==='enneo-funnel.netlify.app');
+ const permitted = () => consent===true && (isProductionHost(win.location.hostname));
  function activate(){
   if(!permitted())return;
   if(!initialized){
