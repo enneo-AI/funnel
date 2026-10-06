@@ -5,7 +5,7 @@
 - Repository: https://github.com/enneo-AI/funnel, Veröffentlichungsbranch `main`.
 - Live geprüfter UI-Stand: `20ef230` (Verkaufsstrecke V3). Nachfolgende Abschluss-Commits betreffen nur Dokumentation.
 - Vorschauen: https://enneo-funnel.netlify.app/ (A), https://enneo-funnel.netlify.app/2 (B), https://enneo-funnel.netlify.app/3 (C).
-- React/Vite, lokale Markenassets, keine externen Tracker. Netlify baut mit `npm run build` und veröffentlicht **`dist/client`**. `dist` verursacht eine 404 auf der Startseite. SPA-Fallback ist eingerichtet.
+- React/Vite, lokale Markenassets, Meta-Pixel nach ausdrücklicher Marketing-Zustimmung (Implementierung 06.10., siehe docs/tracking.md). Netlify baut mit `npm run build` und veröffentlicht **`dist/client`**. `dist` verursacht eine 404 auf der Startseite. SPA-Fallback ist eingerichtet.
 
 ## Maßgebliche Nutzerentscheidungen
 
@@ -32,3 +32,7 @@ Derzeit bleiben Angaben nur im Arbeitsspeicher. Der Beispielkalender bucht nicht
 - Lokaler Arbeitsbranch hier: `codex/funnel-ui`, Upstream `origin/main`. Veröffentlichung explizit mit `git push origin HEAD:main`, keine Zugangsdaten in Dateien oder URLs.
 - Letzte Prüfung: 9 Tests und Build erfolgreich; mobile Varianten bis 320 × 568 ohne horizontalen Überlauf und mit sichtbarem Hero-CTA. Desktop, Beispielwechsel, Wiederholen und zweiter CTA geprüft. Details/Belege: `design-qa.md`, `docs/qa/`.
 - Browserprüfung nach UI-Änderungen durchführen; bestehende Sites-Kompatibilität gemäß `AGENTS.md` erhalten.
+
+## Tracking-Ergänzung 06.10.2026
+
+Bestehender Website_Pixel 1573099514138831 mit Cookie-Auswahl eingebunden. PageView/Funnel-Schritte/Calendly-Klick, separate Vorschau-Events, keine Lead- oder Buchungsconversion. 14 Tests + Build bestanden. CAPI/CRM und echte Calendly-Bestätigung weiterhin offen. Domain-Allowlist im Tracking beachten.

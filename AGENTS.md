@@ -33,3 +33,11 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Nutzer fand Mobile V2 als gesamte Seite zu knapp: weniger Hero-Text heißt nicht weniger Verkaufsargumente. Kurzen ersten Bildschirm und sichtbaren CTA bewahren, darunter Nutzen, verifizierte Kundenreferenzen und erklärende Animationen anbieten.
 - Gemeinsame Strecke für A/B/C in `src/ValueStory.jsx` + `src/story.css`: Kundenlogos, interaktiver Beispielprozess, Teamvorteile, EWE-Zitat, Systemdarstellung und erneuter Demo-CTA. Nicht wieder auf Hero + FAQ reduzieren.
 - Nur öffentliche, belegte Kundenangaben nutzen. Quellen und Grenzen: `docs/value-story-sources.md`. Animationen endlich, viewport-gestartet, bei Reduced Motion statisch; keine obligatorischen Extra-Fragen.
+
+## Meta-Tracking (06.10.2026)
+
+- Nutzer hat Tracking-/Pixel-Implementierung beauftragt. Bestehenden `Website_Pixel` der Enneo GmbH verwenden: `1573099514138831` (öffentliche ID, kein Secret). CRM-Datensatz `1593485525599961` ist separat.
+- `src/tracking.mjs` + `TrackingConsent.jsx`: Meta lädt ausschließlich auf `enneo-funnel.netlify.app` nach Marketing-Zustimmung. Lokale/Deployment-Vorschauen senden nichts. Bei eigener Domain die Allowlist bewusst erweitern.
+- Events: PageView, FunnelStart, FunnelStepView/Complete, ContactPreviewComplete, CalendarPreviewView, BookingPreviewComplete, CalendlyOpen; Parameter nur Variante, preview-Modus und erlaubte Schrittnamen. Keine Antworten/Kontaktfelder, kein Advanced Matching, autoConfig aus.
+- Niemals Vorschauabschlüsse als Lead/Schedule melden. Echte Conversion-Events erst nach bestätigter Backend-Übermittlung/Calendly-Buchung. CAPI/CRM-Anbindung bleibt eigener offener Schritt.
+- Consent 180 Tage, widerrufbar über Footer; keine rückwirkende Ereigniswarteschlange vor Zustimmung. Standard-URL-/Browserdaten werden durch Meta übertragen; keine personenbezogenen Daten in Kampagnen-URLs verwenden.
