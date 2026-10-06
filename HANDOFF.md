@@ -58,3 +58,11 @@ MAKE_FUNNEL_ENABLED danach wieder auf false gesetzt; aktueller Dokumentations-Pu
 ## GA4-Erweiterung in Arbeit
 
 GA4-Stream 16054667514 / G-DGN4ZBRG49 in bestehender Enneo-Property 551723662 angelegt. Enhanced Measurement aus. Eigene Statistik-Einwilligung und vollständige Funnel-Ereignisse implementiert, 30 Tests + Build bestanden; Cookie-Auswahl und B-Einstieg lokal im Browser geprüft. Registrierung von Auswertungsdimensionen und Einrichtung des gespeicherten Trichterberichts/Live-Test läuft noch. Details docs/funnel-analytics.md. Keine Änderung an deaktivierter CRM-Pipeline oder Attio-Zugriffsgrenzen.
+
+## GA4-Abnahme abgeschlossen (06.10.2026)
+
+GA4-Messung auf Netlify live (8d842c9 / 7b94475 / c8c8186), 30 Tests + Build. Tatsächliche DebugView-Events inkl. Fragenaufruf/Abschluss/Rücksprung bestätigt; Parameter b/need/full und NPA=1 geprüft. Statistik und Meta separat auswählbar, Widerruf im isolierten Browser verifiziert. Fragen bis Kalender/Terminauswahl mit Testangaben durchlaufen, **keine echte Buchung/CRM-Übermittlung**. Optionaler QA-Diagnosebereich nur bei analytics_debug=1.
+
+Gespeicherter und innerhalb bestehender Property-Nutzer geteilter Bericht „Enneo Demo Funnel – Abbrüche und Varianten“: https://analytics.google.com/analytics/web/?authuser=1#/analysis/a406128363p551723662/edit/bOzUjuw6QQiTHFO8PV9JHg . Tabs Geräte (Fragen bis Buchung), A/B/C, Kampagnen; neun Stufen, je Übergang max. 30 Min, Filter eigener Stream + Messbeginn full. Sechs Custom Dimensions und Schrittzeit-Messwert registriert. Default letzte 28 Tage bis gestern; neue Felder/Events brauchen Verarbeitung, keine rückwirkende Messung. Weitere Details docs/funnel-analytics.md.
+
+Weiter offen wie zuvor: Attio Records/Notes-Schreibrechte, CRM-E2E-Abnahme und Aktivierung; Subdomain-Umstellung inkl. drei Host-/Origin-Freigaben. Analytics benötigt diese CRM-Rechte nicht.

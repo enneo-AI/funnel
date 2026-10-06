@@ -36,3 +36,20 @@ Question-level completion = distinct measured users with funnel_complete_<questi
 Use ?analytics_debug=1 on live URLs for GA4 DebugView (removed from reported page URL). No automatic analytics grant. Test statistics-only (Meta remains off), denial, revocation, B embedded first question, back/revisit, validation failure, calendar error/retry. Never create an actual appointment just to test tracking. Actual booking notification handling is unit-tested with exact iframe origin/source and matching event/invitee URLs.
 
 Google documentation: https://support.google.com/analytics/answer/9327974 ; https://developers.google.com/tag-platform/security/guides/consent?consentmode=basic ; https://developers.google.com/analytics/devguides/collection/ga4/reference/config
+
+## Saved report and live verification — 06.10.2026
+
+Shared read-only with existing users of the Enneo GA4 property:
+https://analytics.google.com/analytics/web/?authuser=1#/analysis/a406128363p551723662/edit/bOzUjuw6QQiTHFO8PV9JHg
+
+Title: Enneo Demo Funnel – Abbrüche und Varianten. Three tabs: Fragen bis Buchung (device category), Varianten A B C (funnel_variant), Kampagnen (session campaign). Nine closed, indirectly-followed stages; each transition limited to 30 minutes, elapsed time displayed. Filters: Stream-Name exactly Enneo Demo Funnel; Funnel Messbeginn exactly full. Default reporting period is last 28 days ending yesterday. Fresh event/custom-definition processing can lag DebugView; no historic backfill is implied.
+
+Six registered event-scoped dimensions: Funnel Variante (funnel_variant), Funnel Messbeginn (funnel_entry), Funnel Betriebsmodus (funnel_mode), Funnel Schritt (funnel_step), Funnel Fehlerfeld (error_field), Funnel Fehlertyp (error_type). Registered custom metric Funnel Schrittzeit (step_time_ms), unit milliseconds. It is sent on completion AND departure; use one event type when aggregating, do not sum both. Imported additional report fields: Stream-Name, session campaign, manual ad content. Session source/medium was incompatible with this funnel exploration; use acquisition/free-form reports for that dimension, not an unsupported breakdown.
+
+Build + 30 tests passed. Deployed commits: 8d842c9 (measurement), 7b94475 (queue initialization from actual consent), c8c8186 (opt-in QA diagnostics). Live Google tag processing and GA4 DebugView verified: page_view, first_visit/session_start, funnel_view_landing, funnel_view_industry, funnel_start, funnel_complete_industry, funnel_view_need, funnel_step_leave and funnel_step_revisit. Inspected GA4 parameters: variant b, step need, entry full, non_personalized_ads 1. Early DebugView checks were empty; do not mistake that earlier intermediate state for the final result.
+
+A fresh in-app browser test completed all questions, validation errors, a valid contact form and real Calendly date/time selection. Its diagnostic callbacks confirmed processing for funnel_form_error, funnel_contact_valid, funnel_calendar_loaded and funnel_time_selected. No final Calendly booking submitted and no booking conversion fabricated. No CRM request because leadEnabled remains false. In-app test consent was withdrawn; diagnostic state consent=false / disabled=true and no new events after navigating back.
+
+Optional diagnostics appear only with analytics_debug=1: loaded script, consent, queued command names and event-processing callbacks. These callbacks alone do not prove server receipt; the above DebugView readback provides that evidence for the checked events. QA campaign tags identify the internal test traffic.
+
+Pending subdomain migration: update host allowlists in src/analytics.mjs and src/tracking.mjs, plus server origin in netlify/functions/lead.mjs and GA stream website URL; validate the new domain's consent and event receipt. DNS/hosting were not changed by this analytics task.
