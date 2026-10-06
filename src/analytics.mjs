@@ -13,7 +13,7 @@ export function safeLocation(location){
 }
 export function createAnalytics(win,doc,variant,{id=GA_ID,now=()=>Date.now()}={}){
  let consent=null,initialized=false,current='landing',mode='calendar_only',entry='full',since=now(),elapsed=0;
- let seen=new Set(),lastActivity=now();
+ let seen=new Set(),lastActivity=now(),scriptState='not_loaded';const debugEvents=[];
  try{const s=JSON.parse(win.localStorage.getItem(ANALYTICS_CONSENT_KEY));if(s&&typeof s.allowed==='boolean'&&now()-s.at>=0&&now()-s.at<AGE)consent=s.allowed;}catch{}
  const debug=new URLSearchParams(win.location.search).get('analytics_debug')==='1';
  const hostOK=()=>win.location.hostname==='enneo-funnel.netlify.app';
@@ -26,6 +26,7 @@ export function createAnalytics(win,doc,variant,{id=GA_ID,now=()=>Date.now()}={}
   if(now()-lastActivity>=IDLE){seen.clear();entry=current==='landing'?'full':'partial';}
   lastActivity=now();if(once&&seen.has(name))return;if(once)seen.add(name);
   const params={send_to:id,funnel_variant:variant,funnel_mode:mode,funnel_entry:entry,funnel_step:current,page_location:safeLocation(win.location),page_title:'Enneo Demo Funnel',page_referrer:'',...(debug?{debug_mode:true}:{}),...detail};
+  if(debug){const item={name,processed:false};debugEvents.push(item);if(debugEvents.length>30)debugEvents.shift();params.event_callback=()=>{item.processed=true;};}
   win.gtag('event',name,params);persist();
  }
  function viewCurrent(){send('funnel_view_'+current,{},true);if(current==='landing'&&variant==='b')send('funnel_view_industry',{funnel_step:'industry'},true);}
@@ -37,11 +38,12 @@ export function createAnalytics(win,doc,variant,{id=GA_ID,now=()=>Date.now()}={}
    win.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
    win.gtag('js',new Date(now()));
    win.gtag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:safeLocation(win.location),page_referrer:'',cookie_domain:'none',cookie_expires:180*86400});
-   const script=doc.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;doc.head.appendChild(script);initialized=true;
+   const script=doc.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;script.onload=()=>{scriptState='loaded';};script.onerror=()=>{scriptState='failed';};scriptState='loading';doc.head.appendChild(script);initialized=true;
   }
   send('page_view',{},true);viewCurrent();
  }
  return {
+  diagnostic:()=>({consent,initialized,script:scriptState,measurement:id,disabled:win['ga-disable-'+id],queuedCommands:(win.dataLayer||[]).filter(x=>x&&x[0]).map(x=>({type:x[0],name:typeof x[1]==='string'?x[1]:''})),events:debugEvents}),
   activate,getConsent:()=>consent,setMode:value=>{mode=value===true?'crm_enabled':'calendar_only';},
   setConsent(allowed){consent=allowed===true;try{win.localStorage.setItem(ANALYTICS_CONSENT_KEY,JSON.stringify({allowed:consent,at:now()}));}catch{}
    if(consent){if(!initialized){entry=current==='landing'?'full':'partial';since=now();elapsed=0;}if(initialized){win['ga-disable-'+id]=false;win.gtag('consent','update',{analytics_storage:'granted'});}activate();}
