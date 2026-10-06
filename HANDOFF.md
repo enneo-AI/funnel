@@ -38,3 +38,7 @@ Derzeit bleiben Angaben nur im Arbeitsspeicher. Der Beispielkalender bucht nicht
 Bestehender Website_Pixel 1573099514138831 mit Cookie-Auswahl eingebunden. PageView/Funnel-Schritte/Calendly-Klick, separate Vorschau-Events, keine Lead- oder Buchungsconversion. 14 Tests + Build bestanden. CAPI/CRM und echte Calendly-Bestätigung weiterhin offen. Domain-Allowlist im Tracking beachten.
 
 Live-Abnahme: 06.10.2026 17:29 Budapest, Meta-Testevents PageView/FunnelStart/FunnelStepView/FunnelStepComplete als Verarbeitet bestätigt; Variante b/preview geprüft. Netlify-Version 464fc58. Nach Test Marketing-Einwilligung widerrufen. Keine Leads/Termine erzeugt. Werbekonto-Verknüpfung und CRM-CAPI nicht geändert.
+
+## Laufende Erweiterung: Kalender + Lead-Schnittstelle
+
+Echter Calendly-Kalender und consentgebundene Schedule-Conversion implementiert; im lokalen Browser verfügbare Tage gesehen, keine Buchung ausgelöst. 21 Tests + Build erfolgreich. Lead-Endpoint /api/lead ist nur vorbereitet und per MAKE_FUNNEL_ENABLED abgeschaltet. Ohne bestätigte CRM-Konfiguration öffnet das Formular nur den Kalender, speichert keinen Attio-Lead. Make-Verbindung „enneo attio“ wurde im Browser vom Nutzer angelegt. Separater inaktiver Website-Funnel-Entwurf angelegt, Mapping/Idempotenz/Antwort noch offen. CAPI-Token-Erzeugung vom Nutzer ausdrücklich freigegeben; Speicherung und Test noch im laufenden Vorgang. Keine abgeschlossene Ende-zu-Ende-Integration behaupten.

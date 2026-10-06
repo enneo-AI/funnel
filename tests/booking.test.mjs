@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {calendlyMessage} from '../src/booking.mjs';
+const source={};
+const eventUri='https://api.calendly.com/scheduled_events/01234567-89ab-cdef-0123-456789abcdef';
+const inviteeUri=eventUri+'/invitees/11234567-89ab-cdef-0123-456789abcdef';
+const event={origin:'https://calendly.com',source,data:{event:'calendly.event_scheduled',payload:{event:{uri:eventUri},invitee:{uri:inviteeUri}}}};
+test('accepts only the actual Calendly iframe and exact origin',()=>{assert.equal(calendlyMessage(event,source).type,'scheduled');assert.equal(calendlyMessage({...event,origin:'https://calendly.com.evil.test'},source),null);assert.equal(calendlyMessage({...event,source:{}},source),null);assert.equal(calendlyMessage(event,null),null);});
+test('no booking conversion for step views, missing payloads or mismatched invitees',()=>{assert.equal(calendlyMessage({...event,data:{event:'calendly.date_and_time_selected'}},source).type,'time_selected');for(const payload of [null,{}, {event:{uri:eventUri},invitee:{uri:inviteeUri.replace('01234567','21234567')}}])assert.equal(calendlyMessage({...event,data:{event:'calendly.event_scheduled',payload}},source),null);});
+test('booking event identifier is stable for browser/server deduplication',()=>{const parsed=calendlyMessage(event,source);assert.equal(parsed.eventId,'calendly-11234567-89ab-cdef-0123-456789abcdef');assert.deepEqual(calendlyMessage(event,source),parsed);});

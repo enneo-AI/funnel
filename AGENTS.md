@@ -41,3 +41,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Events: PageView, FunnelStart, FunnelStepView/Complete, ContactPreviewComplete, CalendarPreviewView, BookingPreviewComplete, CalendlyOpen; Parameter nur Variante, preview-Modus und erlaubte Schrittnamen. Keine Antworten/Kontaktfelder, kein Advanced Matching, autoConfig aus.
 - Niemals Vorschauabschlüsse als Lead/Schedule melden. Echte Conversion-Events erst nach bestätigter Backend-Übermittlung/Calendly-Buchung. CAPI/CRM-Anbindung bleibt eigener offener Schritt.
 - Consent 180 Tage, widerrufbar über Footer; keine rückwirkende Ereigniswarteschlange vor Zustimmung. Standard-URL-/Browserdaten werden durch Meta übertragen; keine personenbezogenen Daten in Kampagnen-URLs verwenden.
+
+## Echte Calendly-Buchungen und CRM-Vorbereitung (06.10.2026)
+
+- Nutzer beauftragte anschließend echte Conversions/CRM/CAPI. `BookingCalendar.jsx` ersetzt den Beispielkalender durch den bestätigten Calendly-Link; Kalender erst nach Kontaktformular öffnen und Name/E-Mail vorausfüllen.
+- `booking.mjs` akzeptiert Buchungsbestätigungen ausschließlich von der echten Kalender-iframe-Window-Referenz und origin https://calendly.com mit plausiblen zusammengehörigen Event-/Invitee-URIs. `Schedule` nur nach dieser Bestätigung und Marketing-Einwilligung. Keine echte Testbuchung ohne ausdrücklichen Auftrag.
+- `netlify/functions/lead.mjs` ist die geschützte serverseitige Make-Anbindung. Aktiv erst bei MAKE_FUNNEL_ENABLED=true plus Webhook-URL/Key. Bis dahin keine CRM-Speicherung/Lead-Conversion behaupten; Kalender bleibt nutzbar.
+- Make-Empfang allein ist kein CRM-Erfolg: explizite saved-Antwort mit passender submission_id und Attio-Record-ID nötig. Stable IDs für Wiederholung/Dedupe. Make-Idempotenz, Notes, CAPI und Server-Buchungsnachweis sind noch fertigzustellen; `integrations/make/README.md` beachten.
