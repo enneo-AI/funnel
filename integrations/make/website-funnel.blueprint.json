@@ -1,5 +1,5 @@
 {
-  "name": "Enneo Website-Funnel \u2192 Attio",
+  "name": "Enneo Website-Funnel → Attio",
   "flow": [
     {
       "id": 1,
@@ -18,9 +18,11 @@
       "id": 2,
       "module": "attio:assertAPerson",
       "version": 2,
-      "parameters": {},
+      "parameters": {
+        "__IMTCONN__": 11644089
+      },
       "mapper": {
-        "matching_attribute": "email_addresses",
+        "matching_attribute": "fe054ee2-d1eb-44d2-b973-c206a351c975",
         "[email-address]email_addresses": [
           "{{lower(trim(1.contact.email))}}"
         ]
@@ -31,6 +33,250 @@
           "y": 0
         }
       }
+    },
+    {
+      "id": 5,
+      "module": "datastore:ExistRecord",
+      "version": 1,
+      "parameters": {
+        "datastore": 208824
+      },
+      "mapper": {
+        "key": "{{1.fingerprint}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 10,
+              "module": "datastore:AddRecord",
+              "version": 1,
+              "parameters": {
+                "datastore": 208824
+              },
+              "filter": {
+                "name": "Neue Anfrage",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{5.exist}}",
+                      "o": "boolean:equal",
+                      "b": "false"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "key": "pending-{{1.fingerprint}}",
+                "overwrite": false
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 0
+                }
+              },
+              "onerror": [
+                {
+                  "id": 11,
+                  "module": "gateway:WebhookRespond",
+                  "version": 1,
+                  "parameters": {},
+                  "mapper": {
+                    "status": "409",
+                    "body": "{\"status\":\"pending\"}",
+                    "headers": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "designer": {
+                      "x": 1500,
+                      "y": 450
+                    }
+                  }
+                },
+                {
+                  "id": 12,
+                  "module": "builtin:Ignore",
+                  "version": 1,
+                  "metadata": {
+                    "designer": {
+                      "x": 1800,
+                      "y": 450
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "module": "attio:makeAnApiCall",
+              "version": 2,
+              "parameters": {
+                "__IMTCONN__": 11644089
+              },
+              "mapper": {
+                "url": "/v2/notes",
+                "method": "POST",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": "{\"data\":{\"parent_object\":\"people\",\"parent_record_id\":\"{{2.id.record_id}}\",\"title\":\"Enneo Demo-Anfrage {{1.submission_id}}\",\"format\":\"plaintext\",\"content\":{{1.note_content_json}}}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 0,
+                  "y": 0
+                }
+              }
+            },
+            {
+              "id": 6,
+              "module": "datastore:AddRecord",
+              "version": 1,
+              "parameters": {
+                "datastore": 208824
+              },
+              "mapper": {
+                "key": "{{1.fingerprint}}",
+                "overwrite": false
+              },
+              "metadata": {
+                "designer": {
+                  "x": 300,
+                  "y": 0
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "gateway:WebhookRespond",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "status": "200",
+                "body": "{\"status\":\"saved\",\"submission_id\":\"{{1.submission_id}}\",\"attio_record_id\":\"{{2.id.record_id}}\"}",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 0
+                }
+              }
+            },
+            {
+              "id": 3,
+              "module": "http:MakeRequest",
+              "version": 4,
+              "parameters": {
+                "authenticationType": "apiKey",
+                "tlsType": "",
+                "apiKeyKeychain": 260644
+              },
+              "filter": {
+                "name": "Marketing-Einwilligung",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.marketing_consent}}",
+                      "o": "boolean:equal",
+                      "b": "true"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "url": "https://graph.facebook.com/v24.0/1573099514138831/events",
+                "method": "post",
+                "contentType": "json",
+                "parseResponse": true,
+                "stopOnHttpError": true,
+                "timeout": "40",
+                "allowRedirects": false,
+                "shareCookies": false,
+                "requestCompressedContent": true,
+                "inputMethod": "jsonString",
+                "jsonStringBodyContent": "{{1.meta_json}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 9,
+              "module": "gateway:WebhookRespond",
+              "version": 1,
+              "parameters": {},
+              "filter": {
+                "name": "Bereits gespeichert",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{5.exist}}",
+                      "o": "boolean:equal",
+                      "b": "true"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "status": "200",
+                "body": "{\"status\":\"saved\",\"submission_id\":\"{{1.submission_id}}\",\"attio_record_id\":\"{{2.id.record_id}}\"}",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              },
+              "metadata": {
+                "designer": {
+                  "x": 0,
+                  "y": 300
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "metadata": {
@@ -41,7 +287,7 @@
       "maxErrors": 3,
       "autoCommit": true,
       "autoCommitTriggerLast": true,
-      "sequential": true,
+      "sequential": false,
       "slots": null,
       "confidential": false,
       "dataloss": false,

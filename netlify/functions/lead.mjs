@@ -1,4 +1,5 @@
-import {routeLead,validateContact,questions} from '../../src/flow.mjs';
+import {createHash} from 'node:crypto';
+import {routeLead,validateContact,questions,labelFor} from '../../src/flow.mjs';
 const ORIGIN='https://enneo-funnel.netlify.app';
 const json=(status,body)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 export function parseLead(body){
@@ -19,8 +20,12 @@ export function createLeadHandler({env=process.env,fetcher=fetch}={}){return asy
  if(env.MAKE_FUNNEL_ENABLED!=='true'||!endpoint||!secret)return json(503,{error:'lead_service_unavailable'});
  let url;try{url=new URL(endpoint);}catch{return json(503,{error:'lead_service_unavailable'});}
  if(url.protocol!=='https:'||!/^hook\.(eu1|eu2|us1|us2)\.make\.com$/.test(url.hostname))return json(503,{error:'lead_service_unavailable'});
+ const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
+ const noteContent=[`Name: ${lead.contact.name}`,`E-Mail: ${lead.contact.email}`,`Unternehmen (Selbstauskunft): ${lead.contact.company}`,...questions.map(q=>`${q.title} ${labelFor(q.key,lead.answers[q.key])}`),`Funnel-Variante: ${lead.variant}`,`Prüfpfad: ${lead.route} (keine bestätigte Sales-Qualifikation)`,`Anfrage-ID: ${lead.submission_id}`].join('\n');
+ const consent=JSON.parse(raw).marketingConsent===true;
+ const meta=consent?{event_name:'Lead',event_id:`lead-${lead.submission_id}`,event_time:Math.floor(Date.now()/1000),action_source:'website',event_source_url:ORIGIN+(lead.variant==='b'?'/2':lead.variant==='c'?'/3':'/'),user_data:{client_ip_address:context.ip,client_user_agent:request.headers.get('user-agent')||undefined},custom_data:{funnel_variant:lead.variant}}:null;
  try{
-  const result=await fetcher(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-make-apikey':secret},body:JSON.stringify({...lead,meta:JSON.parse(raw).marketingConsent===true?{consent:true,event_name:'Lead',event_id:`lead-${lead.submission_id}`,event_time:Math.floor(Date.now()/1000),action_source:'website',event_source_url:ORIGIN+(lead.variant==='b'?'/2':lead.variant==='c'?'/3':'/'),user_data:{client_ip_address:context.ip,client_user_agent:request.headers.get('user-agent')||undefined},custom_data:{funnel_variant:lead.variant}}:{consent:false}}),signal:AbortSignal.timeout(20000)});
+  const result=await fetcher(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-make-apikey':secret},body:JSON.stringify({...lead,fingerprint,note_title:`Enneo Demo-Anfrage ${lead.submission_id}`,note_content_json:JSON.stringify(noteContent),marketing_consent:consent,meta_json:consent?JSON.stringify({data:[meta]}):null}),signal:AbortSignal.timeout(20000)});
   if(!result.ok)return json(502,{error:'lead_not_confirmed'});
   const data=await result.json();
   // An ordinary Make "Accepted" response must NEVER count as an Attio save.
