@@ -25,3 +25,7 @@ Required remaining external configuration: authenticated Make webhook/key; Attio
 - Isolated HTTP test on 06.10.2026 17:48 Budapest: status 200; Meta Test Events showed `FunnelIntegrationTest` / `Server` / `Verarbeitet`, event ID `enneo-capi-setup-20261006`, test code TEST21141. Only synthetic documentation IP/UA, no customer or CRM data. Production blueprint uses server-serialized meta_json, no fixed test body.
 - Draft https://eu1.make.com/3026829/scenarios/7804901/edit. Still INACTIVE; webhook unset, Netlify MAKE_FUNNEL_ENABLED false.
 - Next: approve/create independent webhook key, configure authenticated webhook, wire its ID into module 1, add server-only Netlify secrets, verify new/duplicate/no-consent flows against a labelled CRM test record, then activate. Set scheduling to Immediately as data arrives; import can reset scheduling.
+
+## Latest live check — 18:22
+
+Webhook and Netlify secrets are configured after explicit user approval; no new approval needed. Schedule immediately, 10 starts/min. The authenticated request reached Attio but its Make connection lacks Records Read-Write (403). Records and Notes write scopes must be granted by the Attio integration admin before retry. No CRM data or Meta conversion was created in this test. MAKE_FUNNEL_ENABLED restored to false, Make inactive. The full draft is not yet end-to-end verified. Use the existing named webhook `Enneo Demo Funnel`; the repository blueprint still lacks its runtime hook ID and must not be imported over the live draft without reselecting that existing webhook.
