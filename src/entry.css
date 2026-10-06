@@ -1,0 +1,99 @@
+/* Mobile-first entry pages. The action precedes decorative artwork in DOM order. */
+.app::before { height: 800px; opacity: .1; }
+.site-header { height: 64px; width: calc(100% - 48px); justify-content: center; }
+.brand-button img { width: 122px; }
+.in-flow .site-header { justify-content: space-between; }
+.entry { max-width: 560px; margin: 0 auto; padding: 14px 24px 24px; text-align: center; }
+.entry-content { min-width: 0; }
+.entry h1 { font-size: clamp(32px, 9.5vw, 43px); font-weight: 700; letter-spacing: -.055em; line-height: 1.06; margin: 0 auto; max-width: 18ch; text-wrap: balance; }
+.entry h1 em { display: block; }
+.entry-description { font-size: 15px; line-height: 1.5; color: #625e76; max-width: 32ch; margin: 14px auto 0; text-wrap: pretty; }
+.entry-action { margin: 22px auto 0; max-width: 380px; }
+.entry .primary { min-height: 54px; padding: 14px 18px; font-size: 17px; border-radius: 12px; }
+.entry-caption { margin: 10px 0 0; font-size: 11px; line-height: 1.5; color: #625e76; }
+.entry-art { position: relative; height: clamp(180px, 28svh, 235px); max-width: 340px; margin: 22px auto 0; }
+.entry-art img { display: block; height: 100%; width: 100%; object-fit: contain; }
+.entry-result { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); white-space: nowrap; display: flex; align-items: center; gap: 8px; padding: 10px 15px; border: 1px solid #eae3f5; background: #fff; border-radius: 12px; box-shadow: 0 6px 24px #292c3f12; font-size: 12px; font-weight: 550; }
+.entry-result svg { color: #7b5ae2; }
+.entry-trust { display: flex; gap: 6px; align-items: center; justify-content: center; font-size: 10px; line-height: 1.5; color: #625e76; margin-top: 18px; }
+.entry-trust svg { color: #7b5ae2; flex-shrink: 0; }
+.entry-b .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+.entry-b .choice { position: relative; flex-direction: column; justify-content: center; text-align: center; padding: 11px 8px; min-height: 84px; gap: 7px; border-radius: 12px; }
+.entry-b .choice-copy { flex: none; }
+.entry-b .choice-copy strong { font-size: 13px; line-height: 1.3; font-weight: 550; }
+.entry-b .choice-icon svg { width: 21px; height: 21px; }
+.entry-b .choice-end { display: none; }
+.entry-b .choice.selected::after { content: ''; width: 7px; height: 7px; background: #7b5ae2; border-radius: 50%; position: absolute; top: 9px; right: 9px; }
+.entry-b .entry-action { margin-top: 18px; }
+.entry-art-b { height: 140px; margin-top: 18px; }
+.entry-art-c { height: clamp(185px, 29svh, 245px); }
+.entry-details { max-width: 680px; margin: 0 auto; padding: 30px 24px 20px; border-top: 1px solid #eee9f5; }
+.entry-details h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; text-align: center; }
+.entry-details .faq-item button { padding: 18px 0; font-size: 14px; }
+.entry-details .faq-item p { font-size: 13px; }
+.site-footer { width: 100%; padding: 20px 24px; }
+.summary details { border-top: 1px solid #ded9e9; border-bottom: 1px solid #ded9e9; }
+.summary details summary { cursor: pointer; padding: 17px 0; font-size: 14px; color: #613cdd; }
+.summary details summary:focus-visible { outline: 2px solid #292c3f; outline-offset: 3px; }
+.summary-rows { margin-top: 0; }
+.summary-rows button { min-width: 44px; min-height: 44px; top: 10px; }
+.question-panel h1 { text-align: center; margin-inline: auto; }
+.question-panel .choices { margin-top: 24px; }
+.question-panel .question-intro { text-align: center; margin: 12px 0 0; }
+.question-panel .choice { min-height: 62px; }
+@media (max-width: 760px) {
+  .flow-layout { margin-top: 12px; }
+  .step-progress { margin-bottom: 22px; }
+  .question-panel h1, .contact-panel h1 { font-size: 28px; }
+  .question-panel .choice { min-height: 60px; padding: 13px 14px; }
+  .question-panel .choice-copy strong { font-size: 14px; }
+  .question-panel .choices { gap: 10px; }
+  .contact-panel h1, .contact-panel > .question-intro { text-align: center; }
+  .contact-panel .question-intro { margin: 10px 0 20px; }
+  .contact-layout .summary { margin-top: 0; }
+}
+@media (max-width: 359px) {
+  .site-header { height: 58px; }
+  .entry { padding: 10px 20px 20px; }
+  .entry h1 { font-size: 32px; }
+  .entry-description { font-size: 14px; margin-top: 12px; }
+  .entry-action { margin-top: 18px; }
+  .entry-b .choice { min-height: 79px; padding: 9px 6px; }
+  .entry-b .choice-copy strong { font-size: 12px; }
+  .entry .primary { min-height: 52px; font-size: 16px; }
+  .entry-caption { font-size: 10px; }
+  .entry-trust { font-size: 9px; }
+}
+@media (min-width: 900px) {
+  .site-header { height: 96px; width: min(1120px, calc(100% - 96px)); justify-content: flex-start; }
+  .brand-button img { width: 142px; }
+  .entry { max-width: 1120px; padding: 55px 0 64px; display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; column-gap: 70px; text-align: left; }
+  .entry-content { grid-column: 1; grid-row: 1; }
+  .entry h1 { font-size: clamp(45px, 4.7vw, 62px); max-width: 18ch; margin: 0; text-wrap: initial; }
+  .entry-description { font-size: 19px; max-width: 37ch; margin: 23px 0 0; }
+  .entry-action { margin: 30px 0 0; }
+  .entry .primary { min-height: 58px; }
+  .entry-caption { text-align: center; font-size: 12px; }
+  .entry-art { grid-column: 2; grid-row: 1 / 3; width: 100%; max-width: none; height: 440px; margin: 0; }
+  .entry-result { bottom: 15px; font-size: 15px; padding: 15px 20px; }
+  .entry-trust { grid-column: 1; justify-content: flex-start; font-size: 11px; margin-top: 27px; }
+  .entry-b .choices { max-width: 440px; margin-top: 24px; }
+  .entry-b .choice { min-height: 95px; }
+  .entry-b .choice-copy strong { font-size: 15px; }
+  .entry-b .entry-action { max-width: 440px; margin-top: 22px; }
+  .entry-art-c { height: 450px; }
+  .entry-details { padding: 45px 0; }
+  .entry-details h2 { font-size: 30px; }
+  .site-footer { max-width: 1120px; padding: 24px 0; }
+}
+@media (min-width: 900px) and (max-width: 1240px) {
+  .entry { max-width: calc(100% - 96px); column-gap: 40px; }
+  .entry h1 { font-size: 47px; }
+  .entry-art { height: 370px; }
+  .site-footer { max-width: calc(100% - 96px); }
+}
+
+.contact-layout { display: flex; flex-direction: column; max-width: 540px; gap: 16px; }
+.contact-layout .contact-panel { width: 100%; }
+.contact-layout .summary { width: 100%; padding: 0; margin-top: 8px; }
+@media(min-width:761px){.contact-layout{padding-inline:24px}.contact-panel h1,.contact-panel>.question-intro{text-align:center}}

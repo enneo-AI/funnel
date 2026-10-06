@@ -19,3 +19,11 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Kalenderziel vom Nutzer bestätigt: https://calendly.com/enneo-ai/demo. Kein Login/Embed-Code für öffentliches Embed nötig.
 - Repository: https://github.com/enneo-AI/funnel. Hosting: https://enneo-funnel.netlify.app/ (Netlify, Branch main). netlify.toml setzt Build `npm run build`, Publish `dist/client` und SPA-Fallback. Niemals `dist` veröffentlichen: dessen index.html liegt im Unterordner client. Nicht im Team-Repository veröffentlichen.
 - Siehe README.md, docs/experiment-plan.md und design-qa.md. Nach substantiellen Änderungen Browserprüfung und passende Tests durchführen.
+
+## Verbindliches UI-Feedback vom 06.10.2026 (Mobile V2)
+
+- Neue Nutzervorgabe ersetzt die ursprünglichen Mock-Layouts: mobil kurze, mittig ausgerichtete Hero-Texte, eine klare Handlung, keine überflüssigen Erklärungen oder versetzten Karten.
+- CTA muss beim ersten Aufruf ohne Scrollen sichtbar sein, auch auf 320 × 568. Dekorative Figuren stehen mobil nach dem CTA.
+- Keine sichtbare Testleiste/Variantenumschaltung. Direkte Vorschaupfade: `/` = A, `/2` = B, `/3` = C; alte Root-Querylinks bleiben kompatibel. Keine echte Zufallsverteilung aktiv.
+- Auch Fragen und Kontakt kompakt halten. Bearbeitbare Antwortzusammenfassung standardmäßig eingeklappt. Vorschauhinweise zum fehlenden Versand und zur fehlenden Buchung beibehalten.
+- `src/entry.css` enthält die Mobile-first-Anpassungen; QA unter `docs/qa/mobile-v2/`.

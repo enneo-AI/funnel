@@ -1,4 +1,30 @@
-# Design QA — 2026-10-06
+# Design QA — Mobile V2, 2026-10-06
+
+Grundlage: ausdrückliches Nutzerfeedback zu weniger Text, mittiger mobiler Ausrichtung, sichtbarem CTA und getrennten Variantenpfaden. Frühere Mock-Layouts sind für diese Überarbeitung keine verbindliche Layoutreferenz mehr.
+
+## Umsetzung und Prüfung
+
+- Testleiste, Testdialog und redundante Hero-/Infoblöcke entfernt. Pro Einstieg eine Headline, ein kurzer Erklärungssatz und ein CTA. B enthält zusätzlich die kompakte Branchenwahl.
+- `/`, `/2`, `/3` separat geprüft; alte Root-Querylinks bleiben kompatibel. Keine produktive Zufallszuordnung oder Messung.
+- Alle neun Kombinationen aus drei Varianten und Viewports 320 × 568, 375 × 600, 390 × 844: CTA vollständig im ersten sichtbaren Bereich; keine horizontale Überbreite.
+
+| Viewport | CTA-Unterkante A | B | C |
+| --- | ---: | ---: | ---: |
+| 320 × 568 | 294 px | 426 px | 260 px |
+| 375 × 600 | 327 px | 462 px | 266 px |
+| 390 × 844 | 331 px | 465 px | 270 px |
+
+- Mobile Screens bei 375 × 667 und 320 × 568 sowie Desktop A/B/C bei 1440 × 1000 visuell geprüft. Tablet B bei 768 × 1024 einschließlich sichtbarer Tastaturauswahl geprüft. Screenshots: `docs/qa/mobile-v2/`.
+- B übernimmt Branche und beginnt mit Frage 2. Vollständiger C-Ablauf mit Beispieldaten: Fragen → Kontakt → Zusammenfassung öffnen/Antwort ändern → Kontaktwerte erhalten → Beispieltermin → ausdrücklich als Vorschau gekennzeichneter Abschluss. Neustart erhält `/3`.
+- Kontaktformular steht in visueller und DOM-Reihenfolge vor der eingeklappten Zusammenfassung. Vorschauhinweise und Kontaktvalidierung bleiben erhalten.
+- FAQ-Aufklappen und Tastaturauswahl funktionieren; keine Browserwarnungen/-fehler im geprüften Ablauf. `npm test`: 9/9 bestanden; `npm run build` und `git diff --check`: bestanden.
+- Web Interface Guidelines live geprüft: Fokuszustände, Radiotastatur, Labels, Fehlerfokus, Bildabmessungen, reduzierte Bewegung. Keine neuen dekorativen Endlosschleifen.
+
+Grenzen: technischer/visueller UI-Nachweis, keine bewiesene Conversion-Steigerung. Keine echte Buchung oder Lead-Übermittlung, keine vollständige Screenreader-/Browsermatrix.
+
+---
+
+# Historische QA — erster Entwurf (durch Mobile V2 ersetzt)
 
 Status: **passed for local UI prototype**. Nicht als Produktions-, Datenschutz- oder Conversion-Nachweis verstehen. Keine offenen P0/P1/P2-Befunde aus den unten beschriebenen Prüfungen; echte Integrationen sind ausdrücklich außerhalb dieser UI-Abnahme.
 

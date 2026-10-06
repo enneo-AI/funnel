@@ -8,7 +8,7 @@ A vermittelt die Ausführung bis ins Kundensystem schnell. B senkt die Einstiegs
 
 Alle Ads laufen auf denselben Einstiegspunkt, dort zufällige 1:1:1-Verteilung pro Besucher; konsistente Wiederkehrer-Zuordnung. Nicht jede Anzeige fest an eine Variante koppeln. Kampagne, Creative und Gerät getrennt speichern, keine Namen/E-Mails in URLs oder Analytics. Forced-preview-URLs und interne Besucher aus Auswertung ausschließen. B enthält die erste der vier identischen Fragen bereits auf der Startseite.
 
-Die Vorschau hat nur `variant=a|b|c` und fällt ohne Parameter auf A zurück. `allocateVariant` ist geprüft, aber noch nicht an echte Besucher oder persistenten Speicher angeschlossen.
+Die Vorschau nutzt feste Direktpfade: `/` = A, `/2` = B und `/3` = C, ohne sichtbare Testleiste. Root-Querylinks mit `variant=a|b|c` funktionieren weiterhin. Diese Pfade dienen der getrennten Ansicht; sie aktivieren keine randomisierte Studie. `allocateVariant` ist geprüft, aber noch nicht an echte Besucher oder persistenten Speicher angeschlossen.
 
 ## Messung
 

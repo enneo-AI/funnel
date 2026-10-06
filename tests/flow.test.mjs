@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {allocateVariant,getVariant,routeLead,validateContact} from '../src/flow.mjs';
+import {allocateVariant,getVariant,variantFromLocation,routeLead,validateContact} from '../src/flow.mjs';
 const lead={industry:'energy',need:'data',volume:'large',stage:'project'};
 test('assignment boundaries and invalid random values',()=>{
  assert.deepEqual([0,1/3-Number.EPSILON,1/3,2/3,0.999].map(allocateVariant),['a','a','b','c','c']);
@@ -19,4 +19,14 @@ test('small or uncertain businesses retain a review path',()=>{
 test('contact checks require all three fields without rejecting freemail domains',()=>{
  assert.deepEqual(Object.keys(validateContact({name:' ',company:'',email:'invalid'})),['name','company','email']);
  assert.deepEqual(validateContact({name:'Beispiel',company:'Beispiel GmbH',email:' demo@gmail.com '}),{});
+});
+
+test('direct variant paths take precedence and legacy links remain usable',()=>{
+ assert.equal(variantFromLocation('/'),'a');
+ assert.equal(variantFromLocation('/1'),'a');
+ assert.equal(variantFromLocation('/2'),'b');
+ assert.equal(variantFromLocation('/3/'),'c');
+ assert.equal(variantFromLocation('/2','?variant=c'),'b');
+ assert.equal(variantFromLocation('/','?variant=c'),'c');
+ assert.equal(variantFromLocation('/unknown','?variant=b'),'a');
 });

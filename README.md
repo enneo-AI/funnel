@@ -6,19 +6,20 @@ Stand: 6. Oktober 2026. Drei responsive Einstiege für Meta-Traffic, ein gemeins
 
 `npm install`, dann `npm run dev -- --host 127.0.0.1 --port 4173`.
 
-- A: `http://127.0.0.1:4173/?variant=a` — Anliegen → Ergebnis
-- B: `http://127.0.0.1:4173/?variant=b` — Direkter Brancheneinstieg
-- C: `http://127.0.0.1:4173/?variant=c` — Kontrolle und Nachvollziehbarkeit
-- `&preview=0` blendet die interne Variantenleiste aus.
+- A: `http://127.0.0.1:4173/` — Anliegen → Ergebnis
+- B: `http://127.0.0.1:4173/2` — Direkter Brancheneinstieg
+- C: `http://127.0.0.1:4173/3` — Kontrolle und Nachvollziehbarkeit
+
+Keine sichtbare Testleiste. Die gleichen Pfade funktionieren auf Netlify. Alte Root-Links mit `?variant=a|b|c` bleiben kompatibel.
 
 Vier Fragen → Kontakt → Beispielkalender → ausdrücklich als Vorschau gekennzeichneter Abschluss. Variante B stellt die erste Frage schon im Einstieg. Angaben bleiben ausschließlich im React-Arbeitsspeicher; Neuladen löscht sie. Es gibt keinen Versand, keine echten Buchungen, keine Besucherzuordnung und keine externen Tracker. Nur der ausdrücklich angeklickte Kalenderlink führt zu https://calendly.com/enneo-ai/demo.
 
 ## Dateien und Prüfung
 
 `src/flow.mjs`: Fragen, Antwortwerte, vorläufige Routingregeln, experimentelle Zuordnungsfunktion (noch nicht eingebunden).
-`src/App.jsx`: Ablauf, Formular, lokale Ereignisvorschau, Beispielkalender.
+`src/App.jsx`: Ablauf, Formular, Ereignisse im Arbeitsspeicher (kein sichtbarer Testbereich), Beispielkalender.
 `src/components.jsx`: drei Einstiege und gemeinsame Komponenten.
-`src/styles.css`, `src/responsive.css`: Gestaltung, Breakpoints und reduzierte Bewegung.
+`src/styles.css`, `src/responsive.css`, `src/entry.css`: Gestaltung, Breakpoints, reduzierte Bewegung und kompakte Mobile-first-Einstiege.
 `public/assets`: lokale Originalmarken-Assets und generierte Figuren.
 
 `npm test` prüft Routing, Zuordnungsgrenzen, Kontaktvalidierung und den mitgelieferten Hosting-Adapter. `npm run build` erzeugt `dist/client`, `dist/server` und `dist/.openai/hosting.json`. UI-Vorschau auf Netlify; keine produktive Lead-Verarbeitung. Visuelle Prüfung: `design-qa.md`, Belege unter `docs/qa`.
