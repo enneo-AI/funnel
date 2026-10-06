@@ -1,3 +1,9 @@
+## Domainwechsel abgeschlossen — 06.10.2026
+
+Produktionsdomain: https://funnel.enneo.ai (A: /, B: /2, C: /3). Deployment bdee708. Gemeinsame exakte Host-Allowlist in src/production-hosts.mjs für Meta, GA4 und den HTTPS-Origin des Lead-Endpunkts; Netlify-Adresse bleibt erlaubt. CAPI übernimmt den geprüften tatsächlichen Origin. GA4-Stream 16054667514 / G-DGN4ZBRG49 auf https://funnel.enneo.ai geändert, Enhanced Measurement weiterhin aus. Bestehender Bericht bleibt gültig.
+
+33 Tests und Build bestanden. Live-Browserprüfung: vor Zustimmung ausschließlich eigenes App-Script; nach Zustimmung Google-Tag und Website_Pixel geladen, sieben GA4-Ereignisse bis funnel_view_need mit erfolgreichem Verarbeitungs-Callback. Das ist eine Client-Prüfung, keine erneute serverseitige DebugView-/Meta-Empfangsbestätigung. Widerruf getestet: disabled=true und keine zusätzlichen Ereignisse bei Rücknavigation. Keine Buchung/CRM-Speicherung ausgelöst. /api/funnel-config bestätigt leadEnabled=false; Attio-Schreibrechte bleiben offen.
+
 # Enneo Demo Funnel — Übergabe, 2026-10-06
 
 ## Aktueller Stand

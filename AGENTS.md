@@ -37,7 +37,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## Meta-Tracking (06.10.2026)
 
 - Nutzer hat Tracking-/Pixel-Implementierung beauftragt. Bestehenden `Website_Pixel` der Enneo GmbH verwenden: `1573099514138831` (öffentliche ID, kein Secret). CRM-Datensatz `1593485525599961` ist separat.
-- `src/tracking.mjs` + `TrackingConsent.jsx`: Meta lädt ausschließlich auf `enneo-funnel.netlify.app` nach Marketing-Zustimmung. Lokale/Deployment-Vorschauen senden nichts. Bei eigener Domain die Allowlist bewusst erweitern.
+- `src/tracking.mjs` + `TrackingConsent.jsx`: Meta lädt ausschließlich auf `funnel.enneo.ai` und `enneo-funnel.netlify.app` nach Marketing-Zustimmung. Lokale/Deployment-Vorschauen senden nichts. Bei eigener Domain die Allowlist bewusst erweitern.
 - Events: PageView, FunnelStart, FunnelStepView/Complete, ContactPreviewComplete, CalendarPreviewView, BookingPreviewComplete, CalendlyOpen; Parameter nur Variante, preview-Modus und erlaubte Schrittnamen. Keine Antworten/Kontaktfelder, kein Advanced Matching, autoConfig aus.
 - Niemals Vorschauabschlüsse als Lead/Schedule melden. Echte Conversion-Events erst nach bestätigter Backend-Übermittlung/Calendly-Buchung. CAPI/CRM-Anbindung bleibt eigener offener Schritt.
 - Consent 180 Tage, widerrufbar über Footer; keine rückwirkende Ereigniswarteschlange vor Zustimmung. Standard-URL-/Browserdaten werden durch Meta übertragen; keine personenbezogenen Daten in Kampagnen-URLs verwenden.
@@ -53,6 +53,13 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Nutzer beauftragte Abbruchanalyse je Frage. `src/analytics.mjs` ergänzt deduplizierte Schritte/Abschlüsse, Rücksprünge, Formular-/Backend-/Kalenderfehler, Kalenderladen/Terminauswahl/Buchung und private Abzweigung. Keine Formularwerte/Antworten in Analytics.
 - Eigener GA4-Stream Enneo Demo Funnel: 16054667514, G-DGN4ZBRG49, Property 551723662. Enhanced Measurement dort deaktiviert. Main-Website-Stream unverändert. Direkter gtag nur nach separater Statistik-Einwilligung; kein zusätzlicher GTM-Container.
-- Analytics/Marketing unabhängig im Cookie-Dialog. Alte Marketing-Einwilligung gilt nicht als Statistik-Einwilligung. Neue Hostnamen ausdrücklich freigeben; derzeit nur enneo-funnel.netlify.app.
+- Analytics/Marketing unabhängig im Cookie-Dialog. Alte Marketing-Einwilligung gilt nicht als Statistik-Einwilligung. Neue Hostnamen ausdrücklich freigeben; funnel.enneo.ai und enneo-funnel.netlify.app über src/production-hosts.mjs.
 - Varianten B: Branchenfrage bereits im Hero sichtbar. Späte Einwilligung markiert partial, keine rückwirkenden Events. Nutzerbasierte Trichterquoten, keine Rohklickquoten; 30-Minuten-Inaktivitätsfenster für lokale Deduplizierung.
 - Details, Messvertrag und Report-Spezifikation in docs/funnel-analytics.md. GA4-Bericht/Live-Abnahme separat verifizieren, nicht allein aus erfolgreichen Unit-Tests behaupten.
+
+## Domainwechsel abgeschlossen — 06.10.2026
+
+Produktionsdomain: https://funnel.enneo.ai (A: /, B: /2, C: /3). Deployment bdee708. Gemeinsame exakte Host-Allowlist in src/production-hosts.mjs für Meta, GA4 und den HTTPS-Origin des Lead-Endpunkts; Netlify-Adresse bleibt erlaubt. CAPI übernimmt den geprüften tatsächlichen Origin. GA4-Stream 16054667514 / G-DGN4ZBRG49 auf https://funnel.enneo.ai geändert, Enhanced Measurement weiterhin aus. Bestehender Bericht bleibt gültig.
+
+33 Tests und Build bestanden. Live-Browserprüfung: vor Zustimmung ausschließlich eigenes App-Script; nach Zustimmung Google-Tag und Website_Pixel geladen, sieben GA4-Ereignisse bis funnel_view_need mit erfolgreichem Verarbeitungs-Callback. Das ist eine Client-Prüfung, keine erneute serverseitige DebugView-/Meta-Empfangsbestätigung. Widerruf getestet: disabled=true und keine zusätzlichen Ereignisse bei Rücknavigation. Keine Buchung/CRM-Speicherung ausgelöst. /api/funnel-config bestätigt leadEnabled=false; Attio-Schreibrechte bleiben offen.
+

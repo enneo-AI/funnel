@@ -1,3 +1,9 @@
+## Domainwechsel abgeschlossen — 06.10.2026
+
+Produktionsdomain: https://funnel.enneo.ai (A: /, B: /2, C: /3). Deployment bdee708. Gemeinsame exakte Host-Allowlist in src/production-hosts.mjs für Meta, GA4 und den HTTPS-Origin des Lead-Endpunkts; Netlify-Adresse bleibt erlaubt. CAPI übernimmt den geprüften tatsächlichen Origin. GA4-Stream 16054667514 / G-DGN4ZBRG49 auf https://funnel.enneo.ai geändert, Enhanced Measurement weiterhin aus. Bestehender Bericht bleibt gültig.
+
+33 Tests und Build bestanden. Live-Browserprüfung: vor Zustimmung ausschließlich eigenes App-Script; nach Zustimmung Google-Tag und Website_Pixel geladen, sieben GA4-Ereignisse bis funnel_view_need mit erfolgreichem Verarbeitungs-Callback. Das ist eine Client-Prüfung, keine erneute serverseitige DebugView-/Meta-Empfangsbestätigung. Widerruf getestet: disabled=true und keine zusätzlichen Ereignisse bei Rücknavigation. Keine Buchung/CRM-Speicherung ausgelöst. /api/funnel-config bestätigt leadEnabled=false; Attio-Schreibrechte bleiben offen.
+
 # Enneo Funnel Analytics
 
 GA4 property 551723662 (Enneo), dedicated web stream 16054667514 `Enneo Demo Funnel`, measurement ID G-DGN4ZBRG49. Created 06.10.2026. Enhanced measurement explicitly OFF for this stream. Main website stream unchanged.
@@ -52,4 +58,4 @@ A fresh in-app browser test completed all questions, validation errors, a valid 
 
 Optional diagnostics appear only with analytics_debug=1: loaded script, consent, queued command names and event-processing callbacks. These callbacks alone do not prove server receipt; the above DebugView readback provides that evidence for the checked events. QA campaign tags identify the internal test traffic.
 
-Pending subdomain migration: update host allowlists in src/analytics.mjs and src/tracking.mjs, plus server origin in netlify/functions/lead.mjs and GA stream website URL; validate the new domain's consent and event receipt. DNS/hosting were not changed by this analytics task.
+Subdomain migration completed; see current verification at the top. DNS/hosting connected by Aleksa.
