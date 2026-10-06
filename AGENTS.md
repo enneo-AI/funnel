@@ -17,5 +17,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Qualifikation bleibt vorläufig: Privatanliegen separat; kleine Volumina und unsicherer Bedarf werden geprüft, nicht automatisch abgelehnt. `business` bedeutet nicht sales-qualifiziert.
 - Nur Beispielangaben im Prototyp. Kein Tracking oder Lead-Backend ohne entsprechende nächste Implementierungsphase aktivieren. Keine API-Keys im Frontend.
 - Kalenderziel vom Nutzer bestätigt: https://calendly.com/enneo-ai/demo. Kein Login/Embed-Code für öffentliches Embed nötig.
-- Repository: https://github.com/enneo-AI/funnel (vom Nutzer am 06.10.2026 bereitgestellt). Hostingziel offen, kein Deployment. Nicht im Team-Repository veröffentlichen.
+- Repository: https://github.com/enneo-AI/funnel. Hosting: https://enneo-funnel.netlify.app/ (Netlify, Branch main). netlify.toml setzt Build `npm run build`, Publish `dist/client` und SPA-Fallback. Niemals `dist` veröffentlichen: dessen index.html liegt im Unterordner client. Nicht im Team-Repository veröffentlichen.
 - Siehe README.md, docs/experiment-plan.md und design-qa.md. Nach substantiellen Änderungen Browserprüfung und passende Tests durchführen.

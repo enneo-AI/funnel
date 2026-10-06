@@ -22,7 +22,7 @@ Vor Start Baseline, minimal relevanten Effekt, Fehlerniveau/Power, Stichprobe, f
 - Lead-Persistenz/CRM-Feldmapping und gesicherte Übertragung, Unternehmensname/Domain und Branche aus Nutzereingaben. Keine behauptete Erkennung sämtlicher anonymer Unternehmen.
 - Mit Lara Vertriebsqualifikation und verbindliche Ausschlusskriterien klären; noch keine harten Mitarbeiter-/Volumenschwellen im Prototyp.
 - Passendes Consent-/Datenschutzkonzept vor Messung. Meta Pixel/CAPI erst in späterer Phase.
-- GitHub: https://github.com/enneo-AI/funnel. Hosting und Domain offen. Kein Supabase-/Railway-Zugang für die aktuelle UI erforderlich.
+- GitHub: https://github.com/enneo-AI/funnel. Hosting: Netlify (enneo-funnel.netlify.app); eigene Domain offen. Kein Supabase-/Railway-Zugang für die aktuelle UI erforderlich.
 
 ## Grundlagen
 

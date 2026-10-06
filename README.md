@@ -21,10 +21,14 @@ Vier Fragen → Kontakt → Beispielkalender → ausdrücklich als Vorschau geke
 `src/styles.css`, `src/responsive.css`: Gestaltung, Breakpoints und reduzierte Bewegung.
 `public/assets`: lokale Originalmarken-Assets und generierte Figuren.
 
-`npm test` prüft Routing, Zuordnungsgrenzen, Kontaktvalidierung und den mitgelieferten Hosting-Adapter. `npm run build` erzeugt `dist/client`, `dist/server` und `dist/.openai/hosting.json`. Noch keine Veröffentlichung. Visuelle Prüfung: `design-qa.md`, Belege unter `docs/qa`.
+`npm test` prüft Routing, Zuordnungsgrenzen, Kontaktvalidierung und den mitgelieferten Hosting-Adapter. `npm run build` erzeugt `dist/client`, `dist/server` und `dist/.openai/hosting.json`. UI-Vorschau auf Netlify; keine produktive Lead-Verarbeitung. Visuelle Prüfung: `design-qa.md`, Belege unter `docs/qa`.
+
+## Netlify
+
+Vorschau: https://enneo-funnel.netlify.app/. GitHub-Branch `main` ist mit Netlify verbunden. Die `netlify.toml` im Repository legt Build (`npm run build`), Basis (`.`) und Veröffentlichungsordner (`dist/client`) fest. `dist` allein ist falsch: Dann liegt die Startseite unter `/client/` statt `/`. Der Sites-Adapter in `dist/server` wird von Netlify nicht benötigt. Der SPA-Fallback erhält auch direkte Seitenaufrufe.
 
 ## Nächste Phase
 
-GitHub-Repository: https://github.com/enneo-AI/funnel. Der UI-Stand wird hier versioniert. Als Nächstes Domain/Hosting festlegen. Vor Live-Traffic müssen Kontaktübermittlung, Calendly-Einbettung samt bestätigtem Buchungsereignis, qualifizierte CRM-Rückmeldung, Consent und belastbare Besucherzuordnung eingerichtet werden. Ein zusätzlicher Datenbank- oder Railway-Dienst ist dafür noch nicht festgelegt.
+GitHub-Repository: https://github.com/enneo-AI/funnel. Der UI-Stand wird hier versioniert. Netlify ist angebunden; eigene Domain noch offen. Vor Live-Traffic müssen Kontaktübermittlung, Calendly-Einbettung samt bestätigtem Buchungsereignis, qualifizierte CRM-Rückmeldung, Consent und belastbare Besucherzuordnung eingerichtet werden. Ein zusätzlicher Datenbank- oder Railway-Dienst ist dafür noch nicht festgelegt.
 
 Der öffentliche Calendly-Link reicht für die Einbettung; kein separat zugesandter Embed-Code nötig. Vorbefüllung und Event-Handling folgen der offiziellen Calendly-Dokumentation. Anbieter-Verfügbarkeit und Tarifumfang vor Live-Integration prüfen.
