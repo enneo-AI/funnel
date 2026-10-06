@@ -33,9 +33,8 @@ export function createAnalytics(win,doc,variant,{id=GA_ID,now=()=>Date.now()}={}
   if(!permitted())return;
   win['ga-disable-'+id]=false;
   if(!initialized){
-   restore();win.dataLayer=win.dataLayer||[];win.gtag=win.gtag||function(){win.dataLayer.push(arguments);};
-   win.gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
-   win.gtag('consent','update',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+   restore();win.dataLayer=win.dataLayer||[];win.gtag=function(){win.dataLayer.push(arguments);};
+   win.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
    win.gtag('js',new Date(now()));
    win.gtag('config',id,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:safeLocation(win.location),page_referrer:'',cookie_domain:'none',cookie_expires:180*86400});
    const script=doc.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+id;doc.head.appendChild(script);initialized=true;
