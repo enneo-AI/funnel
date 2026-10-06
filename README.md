@@ -12,6 +12,8 @@ Stand: 6. Oktober 2026. Drei responsive Einstiege für Meta-Traffic, ein gemeins
 
 Keine sichtbare Testleiste. Die gleichen Pfade funktionieren auf Netlify. Alte Root-Links mit `?variant=a|b|c` bleiben kompatibel.
 
+Unter dem kompakten Einstieg folgen Kundenlogos, ein interaktives Servicebeispiel, Teamvorteile, eine EWE-Kundenstimme, Systemanbindung und ein weiterer Demo-CTA. Öffentliche Quellen: `docs/value-story-sources.md`.
+
 Vier Fragen → Kontakt → Beispielkalender → ausdrücklich als Vorschau gekennzeichneter Abschluss. Variante B stellt die erste Frage schon im Einstieg. Angaben bleiben ausschließlich im React-Arbeitsspeicher; Neuladen löscht sie. Es gibt keinen Versand, keine echten Buchungen, keine Besucherzuordnung und keine externen Tracker. Nur der ausdrücklich angeklickte Kalenderlink führt zu https://calendly.com/enneo-ai/demo.
 
 ## Dateien und Prüfung
@@ -19,6 +21,7 @@ Vier Fragen → Kontakt → Beispielkalender → ausdrücklich als Vorschau geke
 `src/flow.mjs`: Fragen, Antwortwerte, vorläufige Routingregeln, experimentelle Zuordnungsfunktion (noch nicht eingebunden).
 `src/App.jsx`: Ablauf, Formular, Ereignisse im Arbeitsspeicher (kein sichtbarer Testbereich), Beispielkalender.
 `src/components.jsx`: drei Einstiege und gemeinsame Komponenten.
+`src/ValueStory.jsx`, `src/story.css`: gemeinsame Verkaufsstrecke und kurze, viewport-gestartete Animationen mit Reduced-Motion-Alternative.
 `src/styles.css`, `src/responsive.css`, `src/entry.css`: Gestaltung, Breakpoints, reduzierte Bewegung und kompakte Mobile-first-Einstiege.
 `public/assets`: lokale Originalmarken-Assets und generierte Figuren.
 

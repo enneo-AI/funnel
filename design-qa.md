@@ -1,3 +1,17 @@
+# Verkaufsstrecke V3 — 2026-10-06
+
+Nutzerkorrektur: Hero kurz, Landingpage überzeugender. Alle Varianten um dieselben belegten Kundenreferenzen, Vorteile und animierten Servicebeispiele ergänzt. Quellen in `docs/value-story-sources.md`.
+
+- 390 × 844 mobil: Prozesswechsel Abschlag → Bestellstatus aktualisiert Anfrage, Bearbeitung und Ergebnis. Kundenstimme, Systemdarstellung und unterer CTA visuell geprüft. Zu starke Textur im Abschlussblock nach Sichtprüfung reduziert.
+- 320 × 568, alle drei Pfade: kein horizontaler Überlauf, jeweils vier Kundenlogos und Verkaufsstrecke vorhanden. CTA-Unterkanten unverändert A 294, B 426, C 260 px.
+- 1440 × 1000 Desktop: dreispaltiger Ablauf, sämtliche Kundenlogos geladen, Wechsel zu Rechnung und Wiederholen bedienbar. Prozessanimation im Browser als aktiv bestätigt.
+- Unterer CTA führt A und B ohne Branchenwahl korrekt zu Frage 1; keine Verkaufsstrecke mehr im Fragenmodus. Bestehende Qualifikation unverändert.
+- Alle 9 Tests und Build bestanden; keine Warnungen/Fehler in der geprüften Browserstrecke.
+- Bewegung ausschließlich endliche CSS-Transform-/Opacity-Animationen, längste Sequenz unter drei Sekunden. Reduced Motion über CSS geprüft (keine neue OS-Einstellung gesetzt). Inhalte bleiben statisch lesbar.
+- QA-Screens unter `docs/qa/value-story/`. Keine bewiesene Conversion-Steigerung und weiterhin kein echter Lead-/Buchungsversand.
+
+---
+
 # Design QA — Mobile V2, 2026-10-06
 
 Grundlage: ausdrückliches Nutzerfeedback zu weniger Text, mittiger mobiler Ausrichtung, sichtbarem CTA und getrennten Variantenpfaden. Frühere Mock-Layouts sind für diese Überarbeitung keine verbindliche Layoutreferenz mehr.

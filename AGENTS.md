@@ -27,3 +27,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keine sichtbare Testleiste/Variantenumschaltung. Direkte Vorschaupfade: `/` = A, `/2` = B, `/3` = C; alte Root-Querylinks bleiben kompatibel. Keine echte Zufallsverteilung aktiv.
 - Auch Fragen und Kontakt kompakt halten. Bearbeitbare Antwortzusammenfassung standardmäßig eingeklappt. Vorschauhinweise zum fehlenden Versand und zur fehlenden Buchung beibehalten.
 - `src/entry.css` enthält die Mobile-first-Anpassungen; QA unter `docs/qa/mobile-v2/`.
+
+## Verbindliche Ergänzung: Verkaufsstrecke (06.10.2026)
+
+- Nutzer fand Mobile V2 als gesamte Seite zu knapp: weniger Hero-Text heißt nicht weniger Verkaufsargumente. Kurzen ersten Bildschirm und sichtbaren CTA bewahren, darunter Nutzen, verifizierte Kundenreferenzen und erklärende Animationen anbieten.
+- Gemeinsame Strecke für A/B/C in `src/ValueStory.jsx` + `src/story.css`: Kundenlogos, interaktiver Beispielprozess, Teamvorteile, EWE-Zitat, Systemdarstellung und erneuter Demo-CTA. Nicht wieder auf Hero + FAQ reduzieren.
+- Nur öffentliche, belegte Kundenangaben nutzen. Quellen und Grenzen: `docs/value-story-sources.md`. Animationen endlich, viewport-gestartet, bei Reduced Motion statisch; keine obligatorischen Extra-Fragen.
