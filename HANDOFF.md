@@ -36,3 +36,5 @@ Derzeit bleiben Angaben nur im Arbeitsspeicher. Der Beispielkalender bucht nicht
 ## Tracking-Ergänzung 06.10.2026
 
 Bestehender Website_Pixel 1573099514138831 mit Cookie-Auswahl eingebunden. PageView/Funnel-Schritte/Calendly-Klick, separate Vorschau-Events, keine Lead- oder Buchungsconversion. 14 Tests + Build bestanden. CAPI/CRM und echte Calendly-Bestätigung weiterhin offen. Domain-Allowlist im Tracking beachten.
+
+Live-Abnahme: 06.10.2026 17:29 Budapest, Meta-Testevents PageView/FunnelStart/FunnelStepView/FunnelStepComplete als Verarbeitet bestätigt; Variante b/preview geprüft. Netlify-Version 464fc58. Nach Test Marketing-Einwilligung widerrufen. Keine Leads/Termine erzeugt. Werbekonto-Verknüpfung und CRM-CAPI nicht geändert.

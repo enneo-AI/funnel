@@ -22,3 +22,7 @@ No Lead/Schedule/Purchase conversion is implemented. Qualification is provisiona
 Sources: Meta's live manual-install wizard (pixel code verified); https://developers.facebook.com/docs/meta-pixel/get-started/ and https://developers.facebook.com/docs/meta-pixel/reference/ (public documentation fetch was rate-limited).
 
 Validation: npm run build then npm test (14 tests). Consent tests cover default denial, single initialization/PageView, allowlisted event metadata, blocked conversion names, revoke/regrant, expiry and localhost exclusion. Browser: reject and continue funnel verified. Live event receipt must be checked in Events Manager > Events testen after deploying.
+
+## Live verification
+
+Netlify serves commit 464fc58 assets (index-DL8p2k3S.js). On 06.10.2026 at 17:29 Europe/Budapest, Meta Test Events showed PageView, FunnelStart, FunnelStepView and FunnelStepComplete as **Verarbeitet**, source Browser/manual installation. Expanded FunnelStart verified funnel_variant=b and funnel_mode=preview; only IP/User Agent appeared under matching parameters. Consent UI tested on live /2; choice withdrawn after test. No contact submission or appointment created. Meta installation wizard completed with automatic advanced matching off. No ad-account linkage or CRM CAPI configured in this change.
